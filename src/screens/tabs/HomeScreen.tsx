@@ -11,20 +11,21 @@ import z from 'zod';
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux';
 import { increment } from '@features/counter/counterSlice';
 import { useTranslation } from 'react-i18next';
+import { envConfig } from '@shared/constants/config';
 
-type RootStackNavigationProp = NativeStackNavigationProp<RootStackParamList>;
+type RootStackNavigationProps = NativeStackNavigationProp<RootStackParamList>;
 const formSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
   lastName: z.string().min(1, 'Last name is required'),
 });
 
 export default function HomeScreen() {
-  const navigation = useNavigation<RootStackNavigationProp>();
+  const navigation = useNavigation<RootStackNavigationProps>();
   const count = useAppSelector((state) => state.counter.value);
   const dispatch = useAppDispatch();
   const { isPending, error, data } = useQuery({
     queryKey: ['repoData'],
-    queryFn: () => axios('https://api.github.com/repos/TanStack/query').then((res) => res.data),
+    queryFn: () => axios(envConfig.apiUrl).then((res) => res.data),
   });
   const {
     control,
