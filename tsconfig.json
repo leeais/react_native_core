@@ -3,9 +3,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@navigation/*": ["src/navigation/*"],
+      "@screens/*": ["src/screens/*"],
+      "@types/*": ["src/types/*"],
       "@/*": ["src/*"],
-      "tests": ["tests/*"],
-      "@navigation/*": ["src/navigation/*"]
+      "tests": ["tests/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "nativewind-env.d.ts"],
