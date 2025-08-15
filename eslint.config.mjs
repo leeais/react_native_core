@@ -5,6 +5,7 @@ import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactNative from 'eslint-plugin-react-native';
 import prettier from 'eslint-plugin-prettier';
+import pluginQuery from '@tanstack/eslint-plugin-query';
 
 export default [
   js.configs.recommended,
@@ -26,6 +27,7 @@ export default [
       'react-hooks': reactHooks,
       'react-native': reactNative,
       prettier,
+      ...pluginQuery.configs['flat/recommended'],
     },
     settings: {
       react: {
