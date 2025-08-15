@@ -10,7 +10,7 @@ Dự án này áp dụng chuẩn **Conventional Commits** để đặt tên comm
 
 ## 📌 Cấu trúc commit
 
-<type>(<scope>): <description>
+**<type>(<scope>): <description>**
 
 - **type**: Loại thay đổi (bắt buộc).
 - **scope**: Phạm vi hoặc module bị ảnh hưởng (tùy chọn).
@@ -38,17 +38,17 @@ Dự án này áp dụng chuẩn **Conventional Commits** để đặt tên comm
 
 ## 📝 Ví dụ commit hợp lệ
 
-feat(auth): thêm đăng nhập bằng Google
-fix(api): sửa lỗi không fetch được dữ liệu
-docs(readme): cập nhật hướng dẫn cài đặt
-style: format code với prettier
-refactor(user): tách component UserProfile
-perf(list): tối ưu render danh sách
-test: thêm unit test cho utils
-build: nâng cấp react-native lên 0.74
-ci: cấu hình github actions chạy lint
-chore: xóa file không dùng
-revert: revert "feat(auth): thêm đăng nhập bằng Google"
+- feat(auth): thêm đăng nhập bằng Google
+- fix(api): sửa lỗi không fetch được dữ liệu
+- docs(readme): cập nhật hướng dẫn cài đặt
+- style: format code với prettier
+- refactor(user): tách component UserProfile
+- perf(list): tối ưu render danh sách
+- test: thêm unit test cho utils
+- build: nâng cấp react-native lên 0.74
+- ci: cấu hình github actions chạy lint
+- chore: xóa file không dùng
+- revert: revert "feat(auth): thêm đăng nhập bằng Google"
 
 ---
 
