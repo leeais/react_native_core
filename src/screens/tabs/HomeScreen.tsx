@@ -10,6 +10,7 @@ import z from 'zod';
 
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux';
 import { increment } from '@features/counter/counterSlice';
+import { useTranslation } from 'react-i18next';
 
 type RootStackNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 const formSchema = z.object({
@@ -36,6 +37,8 @@ export default function HomeScreen() {
       lastName: '',
     },
   });
+  const { t, i18n } = useTranslation();
+
   const onSubmit = (data: z.infer<typeof formSchema>) => console.log(data);
 
   if (isPending) return <Text>Loading...</Text>;
@@ -43,7 +46,16 @@ export default function HomeScreen() {
   if (error) return <Text>An error has occurred: {error.message}</Text>;
   return (
     <View className="flex-1 items-center justify-center">
-      <Text>HomeScreen</Text>
+      <Text>{t('welcome')}</Text>
+      <Text>{t('greeting', { name: 'Long' })}</Text>
+      <TouchableOpacity
+        onPress={() =>
+          i18n.language === 'en' ? i18n.changeLanguage('vi') : i18n.changeLanguage('en')
+        }
+      >
+        <Text>{t('button_text')}</Text>
+      </TouchableOpacity>
+
       <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
         <Text>Go to Settings screen</Text>
       </TouchableOpacity>

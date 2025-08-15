@@ -3,6 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@i18n/*": ["src/i18n/*"],
       "@features/*": ["src/features/*"],
       "@shared/*": ["src/shared/*"],
       "@store/*": ["src/store/*"],
