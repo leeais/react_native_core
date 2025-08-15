@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux';
 import { increment } from '@features/counter/counterSlice';
+import axios from 'axios';
 
 type RootStackNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -15,7 +16,7 @@ export default function HomeScreen() {
   const dispatch = useAppDispatch();
   const { isPending, error, data } = useQuery({
     queryKey: ['repoData'],
-    queryFn: () => fetch('https://api.github.com/repos/TanStack/query').then((res) => res.json()),
+    queryFn: () => axios('https://api.github.com/repos/TanStack/query').then((res) => res.data),
   });
 
   if (isPending) return <Text>Loading...</Text>;
