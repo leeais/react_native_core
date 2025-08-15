@@ -1,14 +1,21 @@
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, Button } from 'react-native';
 import React from 'react';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Controller, useForm } from 'react-hook-form';
+import z from 'zod';
 
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux';
 import { increment } from '@features/counter/counterSlice';
-import axios from 'axios';
 
 type RootStackNavigationProp = NativeStackNavigationProp<RootStackParamList>;
+const formSchema = z.object({
+  firstName: z.string().min(1, 'First name is required'),
+  lastName: z.string().min(1, 'Last name is required'),
+});
 
 export default function HomeScreen() {
   const navigation = useNavigation<RootStackNavigationProp>();
@@ -18,6 +25,18 @@ export default function HomeScreen() {
     queryKey: ['repoData'],
     queryFn: () => axios('https://api.github.com/repos/TanStack/query').then((res) => res.data),
   });
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+    },
+  });
+  const onSubmit = (data: z.infer<typeof formSchema>) => console.log(data);
 
   if (isPending) return <Text>Loading...</Text>;
 
@@ -42,6 +61,44 @@ export default function HomeScreen() {
         <Text>👀 {data.subscribers_count}</Text>
         <Text>✨ {data.stargazers_count}</Text>
         <Text>🍴 {data.forks_count}</Text>
+      </View>
+
+      <View>
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              placeholder="First name"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+          name="firstName"
+        />
+        {errors.firstName && <Text>{errors.firstName.message}</Text>}
+
+        <Controller
+          control={control}
+          rules={{
+            maxLength: 100,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              placeholder="Last name"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+          name="lastName"
+        />
+        {errors.lastName && <Text>{errors.lastName.message}</Text>}
+
+        <Button title="Submit" onPress={handleSubmit(onSubmit)} />
       </View>
     </View>
   );
